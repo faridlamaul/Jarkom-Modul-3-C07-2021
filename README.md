@@ -297,7 +297,7 @@ Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet 
 
   ![10.5](images/10.5-LogueTown.PNG)
 
-  **P.S : Proxy tidak meminta autentikasi user, sebab rule evaluationnya dimulai dengan membandingkan waktu saat ini dengan aturan yang ditetapkan**
+  *P.S : Proxy tidak meminta autentikasi user, sebab rule evaluationnya dimulai dengan membandingkan waktu saat ini dengan aturan yang ditetapkan*
 
 - Untuk melihat apakah aturannya berjalan dengan baik, set waktu saat ini dengan perintah :
 
