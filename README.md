@@ -430,6 +430,70 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 
 ### Jawaban
 
+**Water7**
+
+-   Edit file `/etc/squid/squid.conf` dengan menambahkan config berikut :
+
+    ```
+    acl LUFFY proxy_auth luffybelikapalc07
+    acl ZORO proxy_auth zorobelikapalc07
+
+    acl DOWNLOAD url_regex -i \.jpg$ \.png$
+
+    delay_pools 2
+    delay_class 1 1
+    delay_parameters 1 -1/-1
+    delay_access 1 allow ZORO
+    delay_access 1 deny all
+
+    delay_class 2 1
+    delay_parameters 2 1250/1250
+    delay_access 2 allow LUFFY DOWNLOAD
+    delay_access 2 deny all
+    ```
+
+    ![12.1](images/12.1.png)
+
+    _P.S : Config diatas bertujuan untuk membatasi bandwidth setiap user, dimana pada soal diminta agas `user luffy` dapat mendownload file (`.png` dan `.jpg`) dengan kecepatan `10 kbps` sedangkan `user zoro` tidak memiliki batas kecepatan (`unlimited`)_
+
+-   Restart service squid3 dengan meggunakan perintah :
+
+    ```
+    service squid restart
+    ```
+
+**Loguetown - sebagai user luffy**
+
+-   Pastikan node sudah terhubung menggunakan proxy dengan memasukkan perintah :
+
+    ```
+    env | grep -i proxy
+    ```
+
+-   Kemudian buka alamat `google.com` dengan menggunakan perintah :
+
+    ```
+    lynx google.com
+    ```
+
+-   Masukkan username dan password untuk user luffy, seperti pada gambar berikut :
+
+    ![12.2](images/12.2.png)
+
+-   Jika username dan password valid, maka akan dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
+
+    ![12.3](images/12.3.png)
+
+-   Lakukan download untuk salah satu file `.png` atau `.jpg` seperti pada gambar berikut dan lihat kecepatan downloadnya :
+
+    ![12.4](images/12.4.png)
+
+    ![12.5](images/12.5.png)
+
+    ![12.6](images/12.6.png)
+
+    _P.S : Kecepatan download untuk user luffy telah dibatasi yaitu `10 kbps`_
+
 ## Soal 13
 
 ```
@@ -437,3 +501,65 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 ```
 
 ### Jawaban
+
+**Water7**
+
+-   Edit file `/etc/squid/squid.conf` dengan menambahkan config berikut :
+
+    ```
+    acl LUFFY proxy_auth luffybelikapalc07
+    acl ZORO proxy_auth zorobelikapalc07
+
+    acl DOWNLOAD url_regex -i \.jpg$ \.png$
+
+    delay_pools 2
+    delay_class 1 1
+    delay_parameters 1 -1/-1
+    delay_access 1 allow ZORO
+    delay_access 1 deny all
+
+    delay_class 2 1
+    delay_parameters 2 1250/1250
+    delay_access 2 allow LUFFY DOWNLOAD
+    delay_access 2 deny all
+    ```
+
+    ![13.1](images/13.1.png)
+
+    _P.S : Config diatas bertujuan untuk membatasi bandwidth setiap user, dimana pada soal diminta agas `user luffy` dapat mendownload file (`.png` dan `.jpg`) dengan kecepatan `10 kbps` sedangkan `user zoro` tidak memiliki batas kecepatan (`unlimited`)_
+
+-   Restart service squid3 dengan meggunakan perintah :
+
+    ```
+    service squid restart
+    ```
+
+**TottoLand - sebagai user zoro**
+
+-   Pastikan node sudah terhubung menggunakan proxy dengan memasukkan perintah :
+
+    ```
+    env | grep -i proxy
+    ```
+
+-   Kemudian buka alamat `google.com` dengan menggunakan perintah :
+
+    ```
+    lynx google.com
+    ```
+
+-   Masukkan username dan password untuk user zoro, seperti pada gambar berikut :
+
+    ![13.2](images/13.2.png)
+
+-   Jika username dan password valid, maka akan dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
+
+    ![13.3](images/13.3.png)
+
+-   Lakukan download untuk salah satu file `.png` atau `.jpg` seperti pada gambar berikut dan lihat kecepatan downloadnya :
+
+    ![13.4](images/13.4.png)
+
+    ![13.5](images/13.5.png)
+
+    _P.S : Kecepatan download untuk user zoro tidak dibatasi atau `unlimited`_
