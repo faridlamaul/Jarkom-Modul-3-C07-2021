@@ -65,6 +65,12 @@ Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.20 - [prefix
 
 ### Jawaban
 
+**Config client**
+
+- Lakukan config pada semua client terlebih dahulu (Loguetown, Alabasta, Tottoland, Skypie) dengan konfigurasi sebagai berikut.
+
+![12](https://user-images.githubusercontent.com/77373958/141642281-074fce7d-1846-4858-bad0-4c4e0f0b2c35.PNG)
+
 **Jipangu**
 
 - Buka `/etc/default/isc-dhcp-server`, dan ubah interface menjadi eth0
