@@ -359,23 +359,18 @@ Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar m
 
     ![11.1](images/11.1.png)
 
--   Buat folder `super.franky.c07.com` di direktori `/var/www/` dengan perintah :
-
-    ```
-    mkdir /var/www/super.franky.c07.com
-    ```
-
--   Unzip file library web yang sebelumnya telah di download ke folder yang telah dibuat dengan perintah :
-
-    ```
-    unzip -j super.franky.zip -d /var/www/super.franky.c07.com
-    ```
-
 -   Jalankan konfigurasi website yang telah dibuat dengan menjalankan perintah :
 
     ```
     cd /etc/apache2/sites-available/
     a2ensite super.franky.c07.com.conf
+    ```
+
+-   Kemudian unzip file yang telah didownload dan letakkan pada directory `/var/www/`. Setelah itu rename file menjadi `super.franky.c07.com` dengan command berikut :
+
+    ```
+    unzip super.franky.zip -d /var/www/
+    mv /var/www/super.franky /var/www/super.franky.c07.com
     ```
 
 -   Edit file `/etc/apache2/ports.conf` seperti pada gambar berikut :
@@ -388,11 +383,42 @@ Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar m
     service apache2 restart
     ```
 
-**Water7**
+**EniesLobby**
 
--   Edit file `/etc/squid/squid.conf` seperti pada gambar berikut :
+-   Edit file `/etc/bind/named.conf.local` dan tambahkan config berikut :
+
+    ```
+    zone "super.franky.c07.com" {
+        type master;
+        file "/etc/bind/jarkom/super.franky.c07.com";
+    };
+    ```
 
     ![11.3](images/11.3.png)
+
+-   Edit file `/etc/bind/jarkom/super.franky.c07.com` seperti pada gambar berikut:
+
+    ![11.4](images/11.4.png)
+
+-   Restart bind9 dengan perintah
+
+    ```
+    service bind9 restart
+    ```
+
+**Water7**
+
+-   Edit file `/etc/squid/squid.conf` dan tambahkan config berikut :
+
+    ```
+    dns_nameservers 192.187.2.2 192.168.122.1
+
+    acl WHEN_ACCESS dstdomain google.com
+    deny_info http://super.franky.c07.com:5000 WHEN_ACCESS
+    http_reply_access deny WHEN_ACCESS
+    ```
+
+    ![11.5](images/11.5.png)
 
 -   Restart service squid dengan perintah :
 
@@ -416,11 +442,13 @@ Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar m
 
 -   Masukkan username dan password yang telah diatur pada soal sebelumnya, seperti pada gambar berikut :
 
-    ![11.4](images/11.4.png)
+    ![11.6](images/11.6.png)
+
+    ![11.7](images/11.7.png)
 
 -   Jika username dan password valid, maka setiap kali kita mengakses URL `google.com` maka kita akan secara otomatis dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
 
-    ![11.5](images/11.5.png)
+    ![11.8](images/11.8.png)
 
 ## Soal 12
 
@@ -432,7 +460,7 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 
 **Water7**
 
--   Edit file `/etc/squid/squid.conf` dengan menambahkan config berikut :
+-   Edit file `/etc/squid/squid.conf` dan tambahkan config berikut :
 
     ```
     acl LUFFY proxy_auth luffybelikapalc07
@@ -480,19 +508,21 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 
     ![12.2](images/12.2.png)
 
--   Jika username dan password valid, maka akan dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
-
     ![12.3](images/12.3.png)
 
--   Lakukan download untuk salah satu file `.png` atau `.jpg` seperti pada gambar berikut dan lihat kecepatan downloadnya :
+-   Jika username dan password valid, maka akan dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
 
     ![12.4](images/12.4.png)
+
+-   Lakukan download untuk salah satu file `.png` atau `.jpg` seperti pada gambar berikut dan lihat kecepatan downloadnya :
 
     ![12.5](images/12.5.png)
 
     ![12.6](images/12.6.png)
 
-    _P.S : Kecepatan download untuk user luffy telah dibatasi yaitu `10 kbps`_
+    ![12.7](images/12.7.png)
+
+    _P.S : Kecepatan download untuk user luffy telah dibatasi yaitu `10 kbps` dan dapat dilihat dari gambar diatas_
 
 ## Soal 13
 
@@ -552,14 +582,16 @@ Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kece
 
     ![13.2](images/13.2.png)
 
--   Jika username dan password valid, maka akan dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
-
     ![13.3](images/13.3.png)
 
--   Lakukan download untuk salah satu file `.png` atau `.jpg` seperti pada gambar berikut dan lihat kecepatan downloadnya :
+-   Jika username dan password valid, maka akan dialihkan ke `super.franky.c07.com` seperti pada gambar berikut :
 
     ![13.4](images/13.4.png)
 
+-   Lakukan download untuk salah satu file `.png` atau `.jpg` seperti pada gambar berikut dan lihat kecepatan downloadnya :
+
     ![13.5](images/13.5.png)
 
-    _P.S : Kecepatan download untuk user zoro tidak dibatasi atau `unlimited`_
+    ![13.6](images/13.6.png)
+
+    _P.S : Kecepatan download untuk user zoro tidak dibatasi atau `unlimited` sehingga ia tidak menampilkan kecepatan dowloadnya_
