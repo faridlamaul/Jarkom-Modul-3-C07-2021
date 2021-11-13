@@ -11,50 +11,126 @@ Kelompok C07
 ## Soal 1
 
 ```
-
+Luffy bersama Zoro berencana membuat peta tersebut dengan kriteria EniesLobby sebagai DNS Server, Jipangu sebagai DHCP Server, Water7 sebagai Proxy Server
 ```
 
 ### Jawaban
+
+**Config**
+
+Kita perlu mengkonfigurasi node foosha dan node pada switch 2, agar dapat melakukan penginstalan package
+
+![1](https://user-images.githubusercontent.com/77373958/141627482-bc8bc896-dfd0-48dc-ac44-1ac01b5abbe7.PNG)
+
+![2](https://user-images.githubusercontent.com/77373958/141627543-8007a85d-1682-421e-afa0-8fc75d319fc6.PNG)
+
+![3](https://user-images.githubusercontent.com/77373958/141627589-1e549a29-be5c-439c-a257-6af2c4a3d855.PNG)
+
+![4](https://user-images.githubusercontent.com/77373958/141627624-6b324278-aa7a-4bb8-b5cd-2a379f8ec4e8.PNG)
+
+**EniesLobby**
+
+- Lakukan Penginstalan bind9 dengan menggunakan `apt-get update` dan `apt-get install bind9 -y`
+
+**Jipangu**
+
+- Lakukan Penginstalan dhcp server dengan menggunakan `apt-get update` dan `apt-get install isc-dhcp-server -y`
+
+**Water7**
+
+- Lakukan Penginstalan proxy dengan menggunakan `apt-get update` dan `apt-get install squid -y`
 
 ## Soal 2
 
 ```
-
+Foosha sebagai DHCP Relay
 ```
 
 ### Jawaban
+
+**Foosha**
+
+- Lakukan Penginstalan DHCP relay dengan menggunakan `apt-get update` dan `apt-get install isc-dhcp-relay -y`
+
+- Buka file `/etc/default/isc-dhcp-relay`, kemudian ubah isinya menjadi sebagai berikut. Server mengarah ke IP jipangu (DHCP server) dan ethernet 1, 2, dan 3.
+
+![5](https://user-images.githubusercontent.com/77373958/141632902-81719b15-c142-4f89-80f3-a995c00705fe.PNG)
+
 
 ## Soal 3
 
 ```
-
+Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.20 - [prefix IP].1.99 dan [prefix IP].1.150 - [prefix IP].1.169
 ```
 
 ### Jawaban
+
+**Jipangu**
+
+- Buka `/etc/default/isc-dhcp-server`, dan ubah interface menjadi eth0
+
+![6](https://user-images.githubusercontent.com/77373958/141634679-dfea2faa-d3d3-4e97-b018-f16aa8b63b3b.PNG)
+
+- Buka `/etc/dhcp/dhcpd.conf`, dan tambahkan `range 192.187.1.20 192.187.1.99` dan `range 192.187.1.150 192.188.1.169`.
+
+![10](https://user-images.githubusercontent.com/77373958/141636315-e2714e56-d9ac-4e07-91ed-162dd31cd195.PNG)
+
 
 ## Soal 4
 
 ```
-
+Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.30 - [prefix IP].3.50
 ```
 
 ### Jawaban
+
+**Jipangu**
+
+- Buka `/etc/dhcp/dhcpd.conf`, dan tambahkan `range 192.187.3.30 192.187.3.50`.
+
+![11](https://user-images.githubusercontent.com/77373958/141636416-5ed187ec-de8d-4b6d-9d1d-03c1a2156178.PNG)
 
 ## Soal 5
 
 ```
-
+Client mendapatkan DNS dari EniesLobby dan client dapat terhubung dengan internet melalui DNS tersebut.
 ```
 
 ### Jawaban
+
+**Jipangu**
+
+- Ubah option domain nameserver pada masing-masing subnet dengan penambahan IP EniesLobby.
+
+![10](https://user-images.githubusercontent.com/77373958/141641679-9d56ccb9-b48b-4323-8166-d2be32f8e36c.PNG)
+
+![11](https://user-images.githubusercontent.com/77373958/141641731-0302afc5-3fe5-4d70-a110-b75472afdc9c.PNG)
 
 ## Soal 6
 
 ```
-
+Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 selama 6 menit sedangkan pada client yang melalui Switch3 selama 12 menit. Dengan waktu maksimal yang dialokasikan untuk peminjaman alamat IP selama 120 menit.
 ```
 
 ### Jawaban
+
+**Jipangu**
+
+- Ubah max lease time pada kedua subnet menjadi 7200, sedangkan default lease time pada subnet 1 yaitu 360 dan default lease time pada subnet 3 yaitu 720
+
+![10](https://user-images.githubusercontent.com/77373958/141642122-7568e98e-03ac-4c57-8ee5-5fde2bee1b70.PNG)
+
+![11](https://user-images.githubusercontent.com/77373958/141642125-51b50925-fe3c-472d-b92b-7fa61539b990.PNG)
+
+## Pengecekan kriteria
+
+![kenek](https://user-images.githubusercontent.com/77373958/141642158-290590eb-01bb-4081-b03f-5d9421eb4a8e.PNG)
+
+![kenek2](https://user-images.githubusercontent.com/77373958/141642165-b8244315-059a-4d9e-97a1-0379ca43c14c.PNG)
+
+![kenek3](https://user-images.githubusercontent.com/77373958/141642166-a0a62ef9-5d51-4264-a42a-f0fdbff067cf.PNG)
+
+![kenek4](https://user-images.githubusercontent.com/77373958/141642168-662a195e-c8c0-4cda-abb5-b34ea429afb1.PNG)
 
 ## Soal 7
 
